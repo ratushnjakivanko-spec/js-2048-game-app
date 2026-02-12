@@ -9,15 +9,7 @@ class Game {
   }
 
   createEmptyBoard() {
-    const board = [];
-
-    for (let i = 0; i < this.size; i += 1) {
-      const row = Array(this.size).fill(0);
-
-      board.push(row);
-    }
-
-    return board;
+    return Array.from({ length: this.size }, () => Array(this.size).fill(0));
   }
 
   getScore() {
@@ -25,7 +17,7 @@ class Game {
   }
 
   getState() {
-    return this.state.map((row) => row.slice());
+    return this.state.map((row) => [...row]);
   }
 
   getStatus() {
@@ -36,6 +28,7 @@ class Game {
     if (this.status !== 'idle') {
       return;
     }
+
     this.status = 'playing';
     this.addRandomTile();
     this.addRandomTile();
@@ -52,7 +45,7 @@ class Game {
   }
 
   moveRight() {
-    this.move((row) => row.slice().reverse(), true);
+    this.move((row) => [...row].reverse(), true);
   }
 
   moveUp() {
@@ -63,7 +56,7 @@ class Game {
 
   moveDown() {
     this.transpose();
-    this.move((row) => row.slice().reverse(), true);
+    this.move((row) => [...row].reverse(), true);
     this.transpose();
   }
 
@@ -77,16 +70,18 @@ class Game {
 
     for (let i = 0; i < this.size; i += 1) {
       const originalRow = this.state[i];
+
       const workingRow = transformRow(originalRow);
-      const merged = this.mergeRow(workingRow);
+      const { row: mergedRow, score } = this.mergeRow(workingRow);
 
-      this.score += merged.score;
+      const finalRow = reverseBack ? [...mergedRow].reverse() : mergedRow;
 
-      if (!this.rowsEqual(originalRow, merged.row)) {
+      if (!this.rowsEqual(originalRow, finalRow)) {
         moved = true;
       }
 
-      newBoard.push(reverseBack ? merged.row.reverse() : merged.row);
+      this.score += score;
+      newBoard.push(finalRow);
     }
 
     if (!moved) {
@@ -128,27 +123,28 @@ class Game {
   }
 
   rowsEqual(a, b) {
-    return a.every((val, idx) => val === b[idx]);
+    return a.every((val, i) => val === b[i]);
   }
 
   addRandomTile() {
-    const empty = [];
+    const emptyCells = [];
 
     for (let i = 0; i < this.size; i += 1) {
       for (let j = 0; j < this.size; j += 1) {
         if (this.state[i][j] === 0) {
-          empty.push([i, j]);
+          emptyCells.push([i, j]);
         }
       }
     }
 
-    if (!empty.length) {
+    if (!emptyCells.length) {
       return;
     }
 
-    const [r, c] = empty[Math.floor(Math.random() * empty.length)];
+    const [row, col] =
+      emptyCells[Math.floor(Math.random() * emptyCells.length)];
 
-    this.state[r][c] = Math.random() < 0.9 ? 2 : 4;
+    this.state[row][col] = Math.random() < 0.9 ? 2 : 4;
   }
 
   transpose() {
@@ -159,6 +155,7 @@ class Game {
         newBoard[i][j] = this.state[j][i];
       }
     }
+
     this.state = newBoard;
   }
 
@@ -189,5 +186,4 @@ class Game {
   }
 }
 
-// робимо Game глобально доступним
 window.Game = Game;
