@@ -7,48 +7,51 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>2048</title>
+
+    <!-- підключаємо SCSS без конвертації -->
     <link
       rel="stylesheet"
       href="./styles/main.scss"
     />
   </head>
+
   <body>
     <div class="container">
       <div class="game-header">
         <h1>2048</h1>
+
         <div class="controls">
           <p class="info">
             Score:
             <span class="game-score">0</span>
           </p>
+
           <button class="button start">Start</button>
+          <button class="button restart hidden">Restart</button>
         </div>
       </div>
 
       <table class="game-field">
         <tbody>
-          <tr class="field-row">
+          <tr>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
           </tr>
-
-          <tr class="field-row">
+          <tr>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
           </tr>
-
-          <tr class="field-row">
+          <tr>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
           </tr>
-
-          <tr class="field-row">
+          <tr>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
             <td class="field-cell"></td>
@@ -66,7 +69,7 @@
       </div>
     </div>
 
-    <script src="modules/Game.class.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="./modules/Game.class.js"></script>
+    <script src="./scripts/main.js"></script>
   </body>
 </html>
