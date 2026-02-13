@@ -25,19 +25,20 @@ class Game {
   }
 
   start() {
-    if (this.status !== 'idle') {
+    if (this.status === 'playing') {
       return;
     }
 
+    this.score = 0;
     this.status = 'playing';
+    this.state = this.createEmptyBoard();
+
     this.addRandomTile();
     this.addRandomTile();
   }
 
   restart() {
-    this.score = 0;
-    this.status = 'idle';
-    this.state = this.createEmptyBoard();
+    this.start();
   }
 
   moveLeft() {
