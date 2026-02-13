@@ -38,7 +38,9 @@ class Game {
   }
 
   restart() {
-    this.start();
+    this.score = 0;
+    this.status = 'idle';
+    this.state = this.createEmptyBoard();
   }
 
   moveLeft() {
