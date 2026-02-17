@@ -24,11 +24,8 @@ class Game {
     return this.status;
   }
 
+  // ✅ START — без перевірки status
   start() {
-    if (this.status === 'playing') {
-      return;
-    }
-
     this.score = 0;
     this.status = 'playing';
     this.state = this.createEmptyBoard();
@@ -38,9 +35,7 @@ class Game {
   }
 
   restart() {
-    this.score = 0;
-    this.status = 'idle';
-    this.state = this.createEmptyBoard();
+    this.start();
   }
 
   moveLeft() {
@@ -71,12 +66,11 @@ class Game {
     let moved = false;
     const newBoard = [];
 
-    for (let i = 0; i < this.size; i += 1) {
+    for (let i = 0; i < this.size; i++) {
       const originalRow = this.state[i];
-
       const workingRow = transformRow(originalRow);
-      const { row: mergedRow, score } = this.mergeRow(workingRow);
 
+      const { row: mergedRow, score } = this.mergeRow(workingRow);
       const finalRow = reverseBack ? [...mergedRow].reverse() : mergedRow;
 
       if (!this.rowsEqual(originalRow, finalRow)) {
@@ -106,13 +100,13 @@ class Game {
     const result = [];
     let gained = 0;
 
-    for (let i = 0; i < filtered.length; i += 1) {
+    for (let i = 0; i < filtered.length; i++) {
       if (filtered[i] === filtered[i + 1]) {
         const value = filtered[i] * 2;
 
         result.push(value);
         gained += value;
-        i += 1;
+        i++;
       } else {
         result.push(filtered[i]);
       }
@@ -132,8 +126,8 @@ class Game {
   addRandomTile() {
     const emptyCells = [];
 
-    for (let i = 0; i < this.size; i += 1) {
-      for (let j = 0; j < this.size; j += 1) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         if (this.state[i][j] === 0) {
           emptyCells.push([i, j]);
         }
@@ -153,8 +147,8 @@ class Game {
   transpose() {
     const newBoard = this.createEmptyBoard();
 
-    for (let i = 0; i < this.size; i += 1) {
-      for (let j = 0; j < this.size; j += 1) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         newBoard[i][j] = this.state[j][i];
       }
     }
@@ -167,8 +161,8 @@ class Game {
   }
 
   hasMoves() {
-    for (let i = 0; i < this.size; i += 1) {
-      for (let j = 0; j < this.size; j += 1) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         const value = this.state[i][j];
 
         if (value === 0) {
