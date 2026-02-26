@@ -8,7 +8,7 @@
     />
     <title>2048</title>
 
-    <!-- підключаємо SCSS без конвертації -->
+    <!-- ВАЖЛИВО: для Parcel потрібно підключати SCSS -->
     <link
       rel="stylesheet"
       href="./styles/main.scss"
@@ -69,6 +69,7 @@
       </div>
     </div>
 
+    <!-- ВАЖЛИВО: без type="module" -->
     <script src="./modules/Game.class.js"></script>
     <script src="./scripts/main.js"></script>
   </body>
