@@ -1,5 +1,5 @@
-/* global Game */
-'use strict';
+import '../styles/main.scss';
+import Game from '../modules/Game.class.js';
 
 const game = new Game();
 
@@ -11,6 +11,9 @@ const loseMessage = document.querySelector('.message-lose');
 const scoreElement = document.querySelector('.game-score');
 const cells = document.querySelectorAll('.field-cell');
 
+/**
+ * Відмалювати стан гри
+ */
 function render() {
   const state = game.getState();
   const score = game.getScore();
@@ -23,64 +26,74 @@ function render() {
     const col = index % 4;
     const value = state[row][col];
 
-    cell.textContent = value || '';
     cell.className = 'field-cell';
+    cell.textContent = value > 0 ? String(value) : '';
 
-    if (value) {
+    if (value > 0) {
       cell.classList.add(`field-cell--${value}`);
     }
   });
 
+  // Повідомлення про стан гри
   winMessage.classList.toggle('hidden', gameStatus !== 'win');
   loseMessage.classList.toggle('hidden', gameStatus !== 'lose');
+
+  // Початкове повідомлення показується тільки коли статус = 'idle'
+  startMessage.classList.toggle('hidden', gameStatus !== 'idle');
 }
+
+// -------------------- Обробники --------------------
 
 // Start game
 startBtn.addEventListener('click', () => {
   game.start();
 
-  startMessage.classList.add('hidden');
   startBtn.classList.add('hidden');
   restartBtn.classList.remove('hidden');
-
-  winMessage.classList.add('hidden');
-  loseMessage.classList.add('hidden');
 
   render();
 });
 
 // Restart game
 restartBtn.addEventListener('click', () => {
+  game.status = 'idle'; // повертаємо статус у idle
   game.restart();
 
-  scoreElement.textContent = 0;
-  startMessage.classList.remove('hidden');
   startBtn.classList.remove('hidden');
   restartBtn.classList.add('hidden');
-
-  winMessage.classList.add('hidden');
-  loseMessage.classList.add('hidden');
 
   render();
 });
 
 // Arrow key movement
 document.addEventListener('keydown', (e) => {
+  let moved = false;
+
   switch (e.key) {
     case 'ArrowLeft':
       game.moveLeft();
+      moved = true;
       break;
     case 'ArrowRight':
       game.moveRight();
+      moved = true;
       break;
     case 'ArrowUp':
       game.moveUp();
+      moved = true;
       break;
     case 'ArrowDown':
       game.moveDown();
+      moved = true;
       break;
     default:
-      return;
+      break;
   }
-  render();
+
+  if (moved) {
+    render();
+  }
 });
+
+// -------------------- Початковий рендер --------------------
+render(); // показуємо "Press Start to begin game" при завантаженні сторінки

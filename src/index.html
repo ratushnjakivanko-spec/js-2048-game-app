@@ -7,12 +7,6 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>2048</title>
-
-    <!-- ВАЖЛИВО: для Parcel потрібно підключати SCSS -->
-    <link
-      rel="stylesheet"
-      href="./styles/main.scss"
-    />
   </head>
 
   <body>
@@ -69,8 +63,10 @@
       </div>
     </div>
 
-    <!-- ВАЖЛИВО: без type="module" -->
-    <script src="./modules/Game.class.js"></script>
-    <script src="./scripts/main.js"></script>
+    <!-- Підключаємо тільки main.js як модуль -->
+    <script
+      type="module"
+      src="./scripts/main.js"
+    ></script>
   </body>
 </html>

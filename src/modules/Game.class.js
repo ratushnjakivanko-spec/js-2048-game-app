@@ -17,19 +17,17 @@ class Game {
   }
 
   getState() {
-    return this.state.map((row) => [...row]);
+    return this.state.map((row) => [...row]); // ✅ ця функція тепер ES6 arrow
   }
 
   getStatus() {
     return this.status;
   }
 
-  // ✅ START — без перевірки status
   start() {
     this.score = 0;
     this.status = 'playing';
     this.state = this.createEmptyBoard();
-
     this.addRandomTile();
     this.addRandomTile();
   }
@@ -68,7 +66,7 @@ class Game {
 
     for (let i = 0; i < this.size; i++) {
       const originalRow = this.state[i];
-      const workingRow = transformRow(originalRow);
+      const workingRow = transformRow(originalRow); // тут має бути функція
 
       const { row: mergedRow, score } = this.mergeRow(workingRow);
       const finalRow = reverseBack ? [...mergedRow].reverse() : mergedRow;
@@ -152,7 +150,6 @@ class Game {
         newBoard[i][j] = this.state[j][i];
       }
     }
-
     this.state = newBoard;
   }
 
@@ -183,4 +180,4 @@ class Game {
   }
 }
 
-window.Game = Game;
+export default Game; // ✅ експорт ES6
