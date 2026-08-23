@@ -4,7 +4,7 @@ A browser implementation of the classic **2048** puzzle game, built with vanilla
 
 ## Live Preview
 
-**Live Demo:** [2048 Game](https://ratushnjakivanko-spec.github.io/js_2048_game/)
+**Live Demo:** [2048 Game](https://ratushnjakivanko-spec.github.io/js-2048-game-app/)
 
 > ⚠️ Make sure the link above works in incognito mode before submitting.
 
@@ -24,8 +24,8 @@ A browser implementation of the classic **2048** puzzle game, built with vanilla
 1. Clone the repository:
 
 ```
-git clone https://github.com/ratushnjakivanko-spec/js_2048_game.git
-cd js_2048_game
+git clone https://github.com/ratushnjakivanko-spec/js-2048-game-app.git
+cd js-2048-game-app
 ```
 
 2. Install dependencies:
